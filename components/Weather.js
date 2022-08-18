@@ -1,21 +1,15 @@
-import React , {useState , useEffect} from 'react';
-import {Text , StyleSheet , View , ImageBackground} from 'react-native';
-import Forecast from './Forecast';
-
-
-
+import React from "react";
+import { Text } from "react-native";
+import { StyleSheet,View } from "react-native";
+import { useState } from "react";
+import { ImageBackground } from "react-native";
+import Forecast from "./Forecast";
+import { useEffect } from "react";
 export default function Weather(props) {
-
-    const [forecastInfo, setForecastInfo] = useState({
-        main: '-',
-        description: '-',
-        temp: 0
-    })
     useEffect(() => {
         console.log(`fetching data with zipCode = ${props.zipCode}`)
         if (props.zipCode) {
-            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${props.zipCode},th&units=metric&APPID=00dd3013b9ea996c23c6142a0299cd3c
-            `)
+            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${props.zipCode},th&units=metric&APPID=00dd3013b9ea996c23c6142a0299cd3c`)
                 .then((response) => response.json())
                 .then((json) => {
                     setForecastInfo({
@@ -29,25 +23,28 @@ export default function Weather(props) {
                 });
         }
     }, [props.zipCode])
-    
-
+        const [forecastInfo, setForecastInfo] = useState({
+            main: '-',
+            description: '-',
+            temp: 0
+    }) 
     return (
         <View>
-        <ImageBackground source={require('../bg.jpg')} style={styles.backdrop}>
+            <ImageBackground source={require('../bg.jpg')} style={styles.backdrop}>
             <Text>Zip Code</Text>
             <Text>{props.zipCode}</Text>
             <Forecast {...forecastInfo} />
-        </ImageBackground></View>
-    );
+            </ImageBackground>
+        </View>
+ );
 }
-
 const styles = StyleSheet.create({
     backdrop: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%'
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%'
     },
-});
+   });
    
